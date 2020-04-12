@@ -5,7 +5,7 @@ const Post = (props) => {
     return (
         <div className={styles.item}>
             <img
-                src="https://lh3.googleusercontent.com/proxy/WP5547gt6pSiXrR-IX2Kl-Ltt4YjFH8MJbFmbSgL21bObJLaxTqliHWCep9nuXXgNQeAOKgG9MqV3XgPFyL3dlo-gDkuUF_KFtanTAKxfaPtnNcHSBTAYionZD0uNOPeGXU"
+                src="https://w0.pngwave.com/png/799/987/computer-icons-avatar-social-media-blog-font-awesome-avatar-png-clip-art.png"
                 alt=""/>
             {props.message}
             <div>
