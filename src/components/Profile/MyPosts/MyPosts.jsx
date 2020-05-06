@@ -12,7 +12,7 @@ const MyPosts = (props) => {
 
     let onPostChange = (e) => {
         props.updateNewPostText(e.currentTarget.value)
-    }
+    };
 
     return (
         <div className={styles.postsBlock}>
@@ -28,6 +28,6 @@ const MyPosts = (props) => {
             </div>
         </div>
     );
-}
+};
 
 export default MyPosts
