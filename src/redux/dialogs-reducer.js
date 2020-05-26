@@ -30,6 +30,7 @@ const dialogsReducer = (state = initialState, action) => {
                 message: state.newMessageText
             };
             state.messages.push(newMessage);
+            debugger
             state.newMessageText = "";
             return state;
         default:
