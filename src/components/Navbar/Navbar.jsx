@@ -20,9 +20,12 @@ const Navbar = () => {
             <div className={styles.item}>
                 <NavLink to="/settings">Settings</NavLink>
             </div>
+            <div className={styles.item}>
+                <NavLink to="/users">Users</NavLink>
+            </div>
 
         </nav>
     );
-}
+};
 
 export default Navbar
