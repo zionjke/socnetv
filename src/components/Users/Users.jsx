@@ -1,46 +1,27 @@
 import React from "react";
 import styles from './users.module.css'
+import * as axios from 'axios'
+import userPhoto from '../../assets/images/def_avatar.png'
 
 const Users = (props) => {
 
-    if(props.users.length === 0) {
-        props.setUsers(
-            [
-                {
-                    id: 1,
-                    photoUrl: "https://sun9-11.userapi.com/c841126/v841126729/78500/uwHbsXbX9KQ.jpg?ava=1",
-                    isFollowed: true,
-                    fullName: 'Artem',
-                    status: 'I am a boss',
-                    location: {city: 'Kiev', country: 'Ukraine'}
-                },
-                {
-                    id: 2,
-                    photoUrl: "https://sun9-11.userapi.com/c841126/v841126729/78500/uwHbsXbX9KQ.jpg?ava=1",
-                    isFollowed: false,
-                    fullName: 'Dima',
-                    status: 'I am a boss too',
-                    location: {city: 'Minsk', country: 'Belarus'}
-                },
-                {
-                    id: 3,
-                    photoUrl: "https://sun9-11.userapi.com/c841126/v841126729/78500/uwHbsXbX9KQ.jpg?ava=1",
-                    isFollowed: true,
-                    fullName: 'Sergey',
-                    status: 'I am a boss too',
-                    location: {city: 'Moskow', country:'Russia'}}
-            ]
-        );
+    let getUsers = () => {
+        if(props.users.length === 0) {
+            axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+                props.setUsers(response.data.items);
+            })
+        }
     }
 
-
     return(
-
         <div>
+            <button onClick={getUsers}>
+                Get users
+            </button>
             {props.users.map(user => <div key={user.id}>
                 <span>
                     <div>
-                        <img src={user.photoUrl} className={styles.photo} />
+                        <img src={user.photos.small != null ? user.photos.small : userPhoto } className={styles.photo} />
                     </div>
                     <div>
                         {
@@ -53,7 +34,7 @@ const Users = (props) => {
                 <span>
                     <span>
                         <div>
-                            {user.fullName}
+                            {user.name}
                         </div>
                         <div>
                             {user.status}
@@ -61,10 +42,10 @@ const Users = (props) => {
                     </span>
                     <span>
                         <div>
-                            {user.location.city}
+                            {"user.location.city"}
                         </div>
                         <div>
-                            {user.location.country}
+                            {"user.location.country"}
                         </div>
                     </span>
                 </span>
