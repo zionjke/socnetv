@@ -5,7 +5,7 @@ import * as axios from "axios";
 import Users from "./Users";
 
 
-class UsersAPIComponent extends React.Component {
+class UsersContainer extends React.Component {
 
 
     componentDidMount() {
@@ -70,5 +70,5 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(UsersAPIComponent)
+export default connect(mapStateToProps,mapDispatchToProps)(UsersContainer)
 
