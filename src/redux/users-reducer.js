@@ -1,14 +1,15 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USER';
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+const SET_TOTAL_USER_COUNT = 'SET_TOTAL_USER_COUNT';
 
 
 const initialState = {
-    users: [
-        // {id:1, photoUrl:"https://sun9-11.userapi.com/c841126/v841126729/78500/uwHbsXbX9KQ.jpg?ava=1", isFollowed:true, fullName:'Artem',status:'I am a boss',location:{city:'Kiev',country:'Ukraine'}},
-        // {id:2,  photoUrl:"https://sun9-11.userapi.com/c841126/v841126729/78500/uwHbsXbX9KQ.jpg?ava=1", isFollowed:false, fullName:'Dima',status:'I am a boss too',location:{city:'Minsk',country:'Belarus'}},
-        // {id:3,  photoUrl:"https://sun9-11.userapi.com/c841126/v841126729/78500/uwHbsXbX9KQ.jpg?ava=1", isFollowed:true, fullName:'Sergey',status:'I am a boss too',location:{city:'Moskow',country:'Russia'}}
-    ]
+    users: [],
+    pageSize: 5,
+    totalUsersCount: 0,
+    currentPage: 2
 };
 
 const usersReducer = (state= initialState,action) => {
@@ -45,8 +46,18 @@ const usersReducer = (state= initialState,action) => {
             case SET_USERS:
                 return {
                     ...state,
-                    users: [...state.users, ...action.users]
+                    users: action.users
                 };
+            case SET_CURRENT_PAGE:
+                return {
+                    ...state,
+                    currentPage: action.currentPage
+                };
+            case SET_TOTAL_USER_COUNT:
+                return {
+                    ...state,
+                    totalUsersCount: action.totalUsersCount
+                }
         }
     return state
 };
@@ -70,6 +81,20 @@ export const setUsersAC = (users) => {
     return {
         type: SET_USERS,
         users
+    }
+};
+
+export const setPageAC = (currentPage) => {
+    return {
+        type: SET_CURRENT_PAGE,
+        currentPage
+    }
+};
+
+export const setTotalUserCountAC = (totalUsersCount) => {
+    return {
+        type: SET_TOTAL_USER_COUNT,
+        totalUsersCount
     }
 };
 

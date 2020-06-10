@@ -1,12 +1,47 @@
 import React from "react";
 import {connect} from "react-redux";
-import {followAC, setUsersAC, unfollowAC} from "../../redux/users-reducer";
+import {followAC, setPageAC, setTotalUserCountAC, setUsersAC, unfollowAC} from "../../redux/users-reducer";
+import * as axios from "axios";
 import Users from "./Users";
+
+
+class UsersAPIComponent extends React.Component {
+
+
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
+            this.props.setUsers(response.data.items);
+            this.props.setTotalUsersCount(response.data.totalCount / 100)
+        })
+    }
+
+    onPageChanged = (pageNumber) => {
+        this.props.setPage(pageNumber);
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`).then(response => {
+            this.props.setUsers(response.data.items);
+        })
+    };
+
+    render() {
+        return (
+            <Users totalUsersCount={this.props.totalUsersCount}
+                   pageSize={this.props.pageSize}
+                   onPageChanged={this.onPageChanged}
+                   currentPage={this.props.currentPage}
+                   users={this.props.users}
+                   follow={this.props.follow}
+                   unFollow={this.props.unFollow}/>
+        );
+    };
+}
 
 
 const mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users
+        users: state.usersPage.users,
+        pageSize: state.usersPage.pageSize,
+        totalUsersCount: state.usersPage.totalUsersCount,
+        currentPage: state.usersPage.currentPage
     }
 };
 
@@ -23,9 +58,17 @@ const mapDispatchToProps = (dispatch) => {
         setUsers: (users) => {
             const action = setUsersAC(users);
             dispatch(action)
+        },
+        setPage: (pageNumber) => {
+            const action = setPageAC(pageNumber);
+            dispatch(action)
+        },
+        setTotalUsersCount: (userCount) => {
+            const action = setTotalUserCountAC(userCount);
+            dispatch(action)
         }
     }
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(Users)
+export default connect(mapStateToProps,mapDispatchToProps)(UsersAPIComponent)
 
