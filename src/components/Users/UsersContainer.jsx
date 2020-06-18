@@ -5,7 +5,7 @@ import {
     setIsFetching,
     setPage,
     setTotalUserCount,
-    setUsers,
+    setUsers, unFollow,
     unfollow
 } from "../../redux/users-reducer";
 import * as axios from "axios";
@@ -17,17 +17,17 @@ class UsersContainer extends React.Component {
 
     componentDidMount() {
         this.props.setIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,{withCredentials:true}).then(response => {
             this.props.setIsFetching(false);
             this.props.setUsers(response.data.items);
-            this.props.setTotalUserCount(response.data.totalCount / 100);
+            this.props.setTotalUserCount(response.data.totalCount / 200);
         })
     }
 
     onPageChanged = (pageNumber) => {
         this.props.setPage(pageNumber);
         this.props.setIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`).then(response => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,{withCredentials:true}).then(response => {
             this.props.setIsFetching(false);
             this.props.setUsers(response.data.items);
         })
@@ -93,6 +93,6 @@ let mapStateToProps = (state) => {
 // };
 
 export default connect(mapStateToProps,
-    {follow,unfollow,setUsers,setPage,setTotalUserCount,setIsFetching
+    {follow,unFollow,setUsers,setPage,setTotalUserCount,setIsFetching
     })(UsersContainer)
 
