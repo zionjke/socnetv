@@ -1,3 +1,5 @@
+import {api} from "../dal/api";
+
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const ADD_POST =  'ADD_POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
@@ -63,5 +65,11 @@ export const setUserProfile = (userProfile) => {
         userProfile
     }
 };
+
+export const getUserProfile = (userId) => (dispatch) => {
+    api.getProfile(userId).then(data => {
+        dispatch(setUserProfile(data))
+    })
+}
 
  export default profileReducer
