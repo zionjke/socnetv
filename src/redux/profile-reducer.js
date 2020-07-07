@@ -3,6 +3,7 @@ import {api} from "../dal/api";
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const ADD_POST =  'ADD_POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_STATUS = 'SET_STATUS';
 
 let initialState = {
     posts: [
@@ -10,7 +11,8 @@ let initialState = {
         {id: 2, message: "Its my first post", likesCount: 25}
     ],
     newPostText: "",
-    profile: null
+    profile: null,
+    status: ''
 };
 
  const profileReducer = (state = initialState, action) => {
@@ -39,6 +41,11 @@ let initialState = {
                  ...state,
                  newPostText: action.newText
              };
+         case SET_STATUS:
+             return {
+                 ...state,
+                 status: action.status
+             };
 
          default:
              return state;
@@ -49,6 +56,13 @@ let initialState = {
 export const addPostActionCreator = () => {
     return {
         type: ADD_POST
+    }
+};
+
+export const setUserStatus = (status) => {
+    return {
+        type: SET_STATUS,
+        status
     }
 };
 
@@ -70,6 +84,18 @@ export const getUserProfile = (userId) => (dispatch) => {
     api.getProfile(userId).then(data => {
         dispatch(setUserProfile(data))
     })
-}
+};
+
+export const getUserStatus = (userId) => (dispatch) => {
+    api.getStatus(userId).then(response => {
+        dispatch(setUserStatus(response))
+    })
+};
+
+export const updateUserStatus = (status) => (dispatch) => {
+    api.updateStatus(status).then(() => {
+            dispatch(setUserStatus(status))
+    })
+};
 
  export default profileReducer

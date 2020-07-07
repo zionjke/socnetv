@@ -12,7 +12,6 @@ import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {compose} from "redux";
 
 
-
 class UsersContainer extends React.Component {
 
     componentDidMount() {
