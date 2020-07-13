@@ -26,7 +26,7 @@ let initialState = {
          case ADD_POST:
              let newPost = {
                  id: 5,
-                 message: state.newPostText,
+                 message: action.newPostText,
                  likesCount: 14
              };
 
@@ -36,11 +36,6 @@ let initialState = {
                  newPostText: ""
              };
 
-         case UPDATE_NEW_POST_TEXT:
-             return {
-                 ...state,
-                 newPostText: action.newText
-             };
          case SET_STATUS:
              return {
                  ...state,
@@ -53,9 +48,10 @@ let initialState = {
 
 };
 
-export const addPostActionCreator = () => {
+export const addPostActionCreator = (newPostText) => {
     return {
-        type: ADD_POST
+        type: ADD_POST,
+        newPostText
     }
 };
 
@@ -66,12 +62,7 @@ export const setUserStatus = (status) => {
     }
 };
 
-export const updateNewPostTextActionCreator = (text) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText : text
-    }
-};
+
 
 export const setUserProfile = (userProfile) => {
     return{
