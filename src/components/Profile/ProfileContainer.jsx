@@ -25,6 +25,7 @@ class ProfileContainer extends React.Component{
                 <Profile {...this.props}
                          profile={this.props.profile}
                          status={this.props.status}
+                         isAuth={this.props.isAuth}
                          updateUserStatus={this.props.updateUserStatus}/>
             </div>
         )
@@ -34,7 +35,8 @@ class ProfileContainer extends React.Component{
 const mapStateToProps = (state) => {
     return {
         profile: state.profilePage.profile,
-        status: state.profilePage.status
+        status: state.profilePage.status,
+        isAuth:state.auth.isAuth
     }
 };
 

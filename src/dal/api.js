@@ -36,8 +36,16 @@ export const api = {
         return instance.put(`/profile/status`,{status:status}).then(response => response.data)
     },
 
-    auth() {
+    authMe() {
         return instance.get('/auth/me')
+    },
+
+    login(email,password,rememberMe) {
+        return instance.post('/auth/login',{email,password,rememberMe})
+    },
+
+    logOut() {
+        return instance.delete('/auth/login')
     }
 
 };
