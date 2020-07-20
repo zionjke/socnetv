@@ -1,4 +1,5 @@
 import {api} from "../dal/api";
+import {stopSubmit} from "redux-form";
 
 const SET_USER_DATA = 'SET_USER_DATA';
 const SET_MESSAGE = 'SET_MESSAGE';
@@ -37,7 +38,6 @@ export const setAuthUserData = (id,email,login,isAuth) => {
 };
 
 export const setErrorMessage = (message) => {
-    debugger
     return {
         type: SET_MESSAGE,
         message
@@ -54,17 +54,17 @@ export const getAuthUserData = () => (dispatch) => {
         })
 };
 
-
 export const loginAuth = (email,password,rememberMe)  => (dispatch) => {
+
     api.login(email,password,rememberMe)
         .then((res)=>{
             if(res.data.resultCode === 10) {
                 dispatch(getAuthUserData())
             } else {
-                alert(res.data.messages[0]);
-                dispatch(setErrorMessage(res.data.messages[0]))
+                let message =  res.data.messages[0];
+                dispatch(setErrorMessage(message));
+                dispatch(stopSubmit('login',{_error: message}));
             }
-
     })
 
 };
