@@ -58,7 +58,7 @@ export const loginAuth = (email,password,rememberMe)  => (dispatch) => {
 
     api.login(email,password,rememberMe)
         .then((res)=>{
-            if(res.data.resultCode === 10) {
+            if(res.data.resultCode === 0) {
                 dispatch(getAuthUserData())
             } else {
                 let message =  res.data.messages[0];
