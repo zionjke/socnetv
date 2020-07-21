@@ -8,12 +8,8 @@ import {Redirect} from "react-router-dom";
 import style from '../common/FormsControls/FormsControls.module.css'
 
 
+
 export const LoginForm = (props) => {
-
-    if(props.isAuth) {
-        return <Redirect to='/profile'/>
-    }
-
     return (
         <form onSubmit={props.handleSubmit}>
             <div>

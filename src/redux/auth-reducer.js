@@ -45,7 +45,7 @@ export const setErrorMessage = (message) => {
 };
 
 export const getAuthUserData = () => (dispatch) => {
-    api.authMe()
+    return  api.authMe()
         .then(response => {
             if(response.data.resultCode === 0) {
                 let {id,email,login} = response.data.data;
