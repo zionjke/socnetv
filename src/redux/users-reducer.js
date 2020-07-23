@@ -29,7 +29,7 @@ const usersReducer = (state= initialState,action) => {
                         } else {
                             return {
                                 ...user,
-                                isFollowed: true
+                                followed: true
                             }
                         }
                     })
@@ -43,7 +43,7 @@ const usersReducer = (state= initialState,action) => {
                         } else {
                             return {
                                 ...user,
-                                isFollowed: false
+                                followed: false
                             }
                         }
                     })
@@ -72,7 +72,7 @@ const usersReducer = (state= initialState,action) => {
                 return {
                     ...state,
                     followingInProgress: action.isFetching
-                        ? [...state.followingInProgress,action.userID]
+                        ? [...state.followingInProgress,action.userId]
                         : [...state.followingInProgress.filter(id => id != action.userId)]
                 }
         }
@@ -101,10 +101,10 @@ export const setUsers = (users) => {
     }
 };
 
-export const setPage = (currentPage) => {
+export const setCurrentPage = (page) => {
     return {
         type: SET_CURRENT_PAGE,
-        currentPage
+        page
     }
 };
 
@@ -130,9 +130,10 @@ export const toggleFollowingProgress = (isFetching,userId) => {
     }
 };
 
-export const getUsers = (currentPage,pageSize) => (dispatch) => {
+export const getUsersSuccess = (page,pageSize) => (dispatch) => {
     dispatch(toggleIsFetching(true));
-    api.getUsers(currentPage,pageSize)
+    dispatch(setCurrentPage(page));
+    api.getUsers(page,pageSize)
         .then(data => {
             dispatch(toggleIsFetching(false));
             dispatch(setUsers(data.items));
