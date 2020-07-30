@@ -1,8 +1,9 @@
 import React from "react";
 import styles from './ProfileInfo.module.css'
 import Preloader from "../../common/Preloader/Preloader";
-import ProfileStatus from './ProfileStatus'
+
 import {Redirect} from "react-router-dom";
+import ProfileStatusFnc from "./ProfileStatus";
 
 const ProfileInfo = (props) => {
     if(!props.profile) {
@@ -17,7 +18,7 @@ const ProfileInfo = (props) => {
             <div className={styles.description}>
                 <img src={props.profile.photos.large} alt=""/>
                 <span>{props.profile.aboutMe}</span>
-                <ProfileStatus status={props.status}
+                <ProfileStatusFnc status={props.status}
                                updateUserStatus={props.updateUserStatus}/>
             </div>
         </div>

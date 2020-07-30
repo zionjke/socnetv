@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 class ProfileStatus extends React.Component {
 
@@ -57,4 +57,48 @@ class ProfileStatus extends React.Component {
     }
 }
 
-export default ProfileStatus
+
+const ProfileStatusFnc = (props) => {
+
+    const [isEditMode,setisEditMode] = useState(false);
+    const [status,setStatus] = useState(props.status);
+
+    const deactivatedEditMode = () => {
+        setisEditMode(false);
+        props.updateUserStatus(status)
+    };
+
+    const activatedMode = () => {
+        setisEditMode(true)
+    };
+
+
+    const onStatusChanged = (e) => {
+        setStatus(e.currentTarget.value)
+    };
+
+    useEffect(() => {
+        setStatus(props.status)
+    },[props]);
+
+
+    return (
+        <>
+            {!isEditMode &&
+            <div onClick={activatedMode}>
+                {props.status ? status : '-------' }
+            </div>
+            }
+            {isEditMode &&
+            <div>
+                <input autoFocus={true}
+                       value={status}
+                       onBlur={deactivatedEditMode}
+                       onChange={onStatusChanged}/>
+            </div>
+            }
+        </>
+    )
+};
+
+export default ProfileStatusFnc
