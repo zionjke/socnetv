@@ -79,7 +79,7 @@ const ProfileStatusFnc = (props) => {
 
     useEffect(() => {
         setStatus(props.status)
-    },[props]);
+    },[props.status]);
 
 
     return (
