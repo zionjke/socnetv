@@ -11,7 +11,7 @@ import {Textarea} from "../../common/FormsControls/FormsControls";
 const maxLength15 = maxLenghtCreator(10);
 
 const MyPosts = React.memo((props) => {
-    console.log(' MY POSTS RENDER ');
+    console.log(' MY POSTS RENDER ',props);
 
     let postsEl = props.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>);
 
@@ -22,7 +22,7 @@ const MyPosts = React.memo((props) => {
     return (
         <div className={styles.postsBlock}>
             <h3>My posts</h3>
-            <AddPostReduxForm onSubmit={addNewPost}/>
+            <AddPostReduxForm  onSubmit={addNewPost}/>
             <div className={styles.posts}>
                 {postsEl}
             </div>
@@ -34,7 +34,7 @@ const AddPostForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit} >
             <div>
-                <Field component={Textarea} name='newPostText' validate={[required,maxLength15]} placeholder='Post message' />
+                <Field value={props.newPostText} component={Textarea} name='newPostText' validate={[required,maxLength15]} placeholder='Post message' />
             </div>
             <div>
                 <button >Отправить</button>
