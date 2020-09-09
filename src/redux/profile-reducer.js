@@ -1,7 +1,7 @@
 import {api} from "../dal/api";
 
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
-const ADD_POST =  'ADD_POST';
+const ADD_POST = 'ADD_POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 const DELETE_POST = 'DELETE_POST';
@@ -16,41 +16,41 @@ let initialState = {
     status: ''
 };
 
- const profileReducer = (state = initialState, action) => {
+const profileReducer = (state = initialState, action) => {
 
-     switch (action.type) {
-         case SET_USER_PROFILE:
-            return  {
+    switch (action.type) {
+        case SET_USER_PROFILE:
+            return {
                 ...state,
                 profile: action.userProfile
             };
-         case ADD_POST:
-             let newPost = {
-                 id: 5,
-                 message: action.newPostText,
-                 likesCount: 14
-             };
+        case ADD_POST:
+            let newPost = {
+                id: 5,
+                message: action.newPostText,
+                likesCount: 14
+            };
 
-             return {
-                 ...state,
-                 posts: [...state.posts,newPost],
-                 newPostText: ""
-             };
-         case DELETE_POST:
-             return {
-                 ...state,
-                 posts: state.posts.filter((post,index) => post.id !== action.postId)
-             };
+            return {
+                ...state,
+                posts: [...state.posts, newPost],
+                newPostText: ""
+            };
+        case DELETE_POST:
+            return {
+                ...state,
+                posts: state.posts.filter((post, index) => post.id !== action.postId)
+            };
 
-         case SET_STATUS:
-             return {
-                 ...state,
-                 status: action.status
-             };
+        case SET_STATUS:
+            return {
+                ...state,
+                status: action.status
+            };
 
-         default:
-             return state;
-     }
+        default:
+            return state;
+    }
 
 };
 
@@ -76,32 +76,32 @@ export const setUserStatus = (status) => {
 };
 
 
-
 export const setUserProfile = (userProfile) => {
-    return{
+    return {
         type: SET_USER_PROFILE,
         userProfile
     }
 };
 
-export const getUserProfile = (userId) => (dispatch) => {
-    api.getProfile(userId).then(data => {
-        dispatch(setUserProfile(data))
-    })
+export const getUserProfile = (userId) => async (dispatch) => {
+    const response = await api.getProfile(userId);
+    dispatch(setUserProfile(response))
+
 };
 
-export const getUserStatus = (userId) => (dispatch) => {
-    api.getStatus(userId).then(response => {
-        dispatch(setUserStatus(response))
-    })
+export const getUserStatus = (userId) => async (dispatch) => {
+    const response = await api.getStatus(userId);
+    dispatch(setUserStatus(response))
 };
 
-export const updateUserStatus = (status) => (dispatch) => {
-    api.updateStatus(status).then(() => {
-            dispatch(setUserStatus(status))
-    })
+export const updateUserStatus = (status) => async (dispatch) => {
+    const response = await api.updateStatus(status);
+    if(response.data.resultCode === 0) {
+        dispatch(setUserStatus(status))
+    }
+
 };
 
- export default profileReducer
+export default profileReducer
 
 
